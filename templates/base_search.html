@@ -1,0 +1,17 @@
+{% extends 'base.html'%}
+
+{% block lowercontent %}
+<div class="row">
+	<div class="span6">
+		<div class="teacher-wrap">
+	  	<p class="choose-a-teacher"> Choose a School </p>
+	   	<ul class="teacher-list">
+	      {% for school in schools %}
+	      <li><a href="/home/{{ school.dbn }}">{{ school.name }}</a> </li>
+	      {% endfor %}
+		   </ul>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

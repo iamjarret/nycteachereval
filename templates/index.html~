@@ -1,0 +1,60 @@
+<!DOCTYPE html>   
+<html lang="en">   
+<head>   
+<meta charset="utf-8">   
+<title>Teacher Ratings</title>   
+<meta name="description" content="Twitter Bootstrap Basic Tab Based Navigation Example">  
+<link href="http://bootswatch.com/readable/bootstrap.min.css" rel="stylesheet">   
+<link href="base.css" rel="stylesheet">  
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+
+</head>  
+<body>  
+<div class="container">
+	<div class="row">
+		<div class="header">
+			Teach Stars 
+		</div>
+	</div>
+	
+	<div class="row">	
+		<div class="span10 offset1 explanation">
+		Measuring teacher quality is complicated. It is not only important to consider student
+    	performance, but also the context in which teachers are operating. The site below provides
+    	New York City teacher rankings along with additional context to better understand the rankings
+    	in the context of the environment.
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="choose-grade">
+			<h3>Click a Grade</h3>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="grades">
+	 	<button class="btn btn-success" type="button">Grade 4</button>
+	 	<button class="btn btn-success" type="button">Grade 5</button>
+	 	<button class="btn btn-success" type="button">Grade 6</button>
+	 	<button class="btn btn-success" type="button">Grade 7</button>
+	 	<button class="btn btn-success" type="button">Grade 8</button>	
+ 	</div>
+
+	</div>
+	
+	<div class="row">
+		<div class="enter-school">
+        	<input id="schools" type="text" value="Enter a School Name" class="span3" style="margin: 0 auto;">
+        </div>
+	</div>
+
+
+
+		
+</div>
+</body>  
+</html>

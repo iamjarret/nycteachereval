@@ -1,0 +1,52 @@
+{% extends 'base.html'%}
+
+{% block lowercontent %}
+
+<div class="row" style="margin-left: 50px; position: relative; width: 100%;">
+	<div class="span6" style="width: 400px; text-align: center;">
+    	<h1 style="line-height: 35px;">{{ school.name }}</h1>
+	</div>
+</div>
+
+<div class="row">
+	<div class="span6">
+		<div class="teacher-wrap">
+
+		<p class="choose-a-teacher"> % free lunch: {{school.freelunch}} </p>
+		<p class="choose-a-teacher"> % ell: {{school.ell}} </p>
+		<p class="choose-a-teacher"> % sped: {{school.sped}} </p>
+		<p class="choose-a-teacher"> % asian: {{school.asian}} </p>
+		<p class="choose-a-teacher"> % black: {{school.black}} </p>
+		<p class="choose-a-teacher"> % hispanic: {{school.hisp}} </p>
+		<p class="choose-a-teacher"> % white: {{school.white}} </p>
+		<p class="choose-a-teacher"> % male: {{school.male}} </p>
+		<p class="choose-a-teacher"> % female: {{school.female}} </p>
+
+		</div>
+	</div>
+</div>
+
+<div class="row" style="margin-left: 50px; position: relative; width: 100%;">
+	<div class="span6" style="width: 400px; text-align: center;">
+    	<h1 style="line-height: 35px;">{{ teacher.last_name }}, {{ teacher.first_name }}</h1>
+	</div>
+</div>
+
+<div class="row">
+	<div class="span6">
+		<div class="teacher-wrap">
+
+	   	<ul class="teacher-list">
+	      <li> va_0910_math: {{teacher.va_0910_math}} </li>
+	      <li> va_0910_eng: {{teacher.va_0910_eng}} </li>
+	      <li> va_0809_math: {{teacher.va_0809_math}} </li>
+	      <li> va_0809_eng {{teacher.va_0809_eng}} </li>
+	      <li> va_0708_math {{teacher.va_0708_math}} </li>
+	      <li> va_0708_eng {{teacher.va_0708_eng}} </li>
+
+		   </ul>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

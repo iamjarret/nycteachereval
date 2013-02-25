@@ -1,0 +1,237 @@
+<!DOCTYPE html>   
+<html lang="en">   
+<head>   
+<meta charset="utf-8">   
+<title>Teacher Ratings</title>   
+<meta name="description" content="Twitter Bootstrap Basic Tab Based Navigation Example">  
+<link href="http://bootswatch.com/readable/bootstrap.min.css" rel="stylesheet">   
+<link href="/home/jarret/nycteacher/nycteacher/static/css/base.css" rel="stylesheet">  
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+
+
+<script type="text/javascript">
+  google.load("visualization", "1", {packages:["corechart"]});
+  google.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Year', 'Performance'],
+      [2006,  {{ teacher.va_0506.math }}],
+      [2007,  {{ teacher.va_0607.math }}],
+      [2008,  {{ teacher.va_0708.math }}],
+      [2009,  {{ teacher.va_0809.math }}],
+      [2010,  {{ teacher.va_0910.math }}],
+    ]);
+
+    var options = {
+      title: 'Teacher Performance'
+    };
+
+    var chart = new google.visualization.ScatterChart(document.getElementById('chart_teacher'));
+    {% if teacher %}
+    chart.draw(data, options);
+    {% endif %}
+  }
+</script>
+
+<script type="text/javascript">
+  google.load("visualization", "1", {packages:["corechart"]});
+  google.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Race', 'Percent'],
+      ['Asian',     {{ demographic.asian_percent }}],
+      ['Hispanic',     {{ demographic.hispanic_percent }}],
+      ['White',  {{ demographic.white_percent }}],
+      ['Black', {{ demographic.black_percent }}]
+    ]);
+
+    var options = {
+      title: 'Racial Breakdown'
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('chart_race'));
+    {% if demographic %}
+    chart.draw(data, options);
+    {% endif %}
+  }
+</script>
+
+<script type="text/javascript">
+  google.load("visualization", "1", {packages:["corechart"]});
+  google.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Type', 'Percent'],
+      ['Regular Graduate',     {{ graduation.grads_percent }}],
+      ['Regents',     {{ graduation.regents_percent_grad }}],
+      ['Advanced Regents',  {{ graduation.advregents_percent_grad }}],
+      ['Other Regents', {{ graduation.othregents_percent_grad }}]
+    ]);
+
+    var options = {
+      title: 'Graduation Rates'
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('chart_grad'));
+    {% if graduation %}
+    chart.draw(data, options);
+    {% endif %}
+  }
+</script>
+
+<body>
+	<div class="container" style="height: 1300px;">
+		<div class="row">
+	    	<div class="header">
+	        	<img src="../static/img/logo.png">
+	    	</div>
+		</div>
+
+		<div class="row">   	
+			<div class="span10 offset1 explanation">
+			  Measuring teacher quality is complicated. It is not only important to consider student
+	    	performance, but also the context in which teachers are operating. The site below provides
+	    	New York City teacher rankings along with additional context to better understand the rankings
+	    	in the context of the environment.
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="enter-school">
+				<form method="post" action="/home">
+	        		<input id="schools" type="text" name="school" value="Enter a School Name" class="span3" onfocus="if(this.value == 'Enter a School Name') { this.value = ''; }" style="width:300px;"><br>
+	        		<input class="btn" type="submit" value="Choose School"></input>
+	        	</form
+	        </div>
+		</div>
+
+		{% if school %}
+		<div class="row" style="margin-left: 50px; position: relative; width: 100%;">
+	    	<div class="span6" style="width: 400px; text-align: center;">
+	        	<h1 style="line-height: 35px;">{{ school.name }}</h1>
+	    	</div>
+	    	<div style="position: absolute; left: 530px; line-height: 5px;">
+	    		<h1>{{ teacher.name }}</h1>
+	    	</div>
+		</div>
+
+		<div class="row">
+	    	<div class="span6"  style="position: relative;">
+	          
+	          {% if demographic %}
+	          <div id="chart_race" style="position: absolute; left: 10px; top: 470px;" class="nice"></div>
+	          {% endif %}
+	          {% if graduation %}
+	          <div id="chart_grad" style="position: absolute; left: 10px; top: 250px;" class="nice"></div>
+	          {% endif %}
+	    	</div>
+	    </div>
+
+		<div class="row">
+	   		<div class="span6" style=" padding-top: 20px;">
+	       			<div class="grade-wrap" style="padding-left: 0px;">
+	       					{% if school.grade2012 %}
+				    		<p>Overall Grade</p>
+				        	<p style="font-size: 60px;">{{ school.grade2012 }}</p>
+				        	{% endif %}
+				        	{% if school.peer_index %}
+				        	<p id="peer" style="margin-left: 15px;">Peer Index: {{ school.peer_index }}</p>
+				        	{% endif %}
+			    	        <p>% Free Lunch: {{ demographic.freelunch_reduced_percent }}%</p>
+	        		</div>
+	   		</div>
+
+	   		<div class="span6">
+	    		<div class="teacher-wrap">
+	          	<p class="choose-a-teacher"> Choose a Teacher </p>
+	           	<ul class="teacher-list">
+	              {% for teacher in teachers %}
+	              {% if teacher.teacher_id %}
+	              <li><a href="/home/{{ dbn }}/{{ teacher.teacher_id }}">{{ teacher.name }}</a> </li>
+	              {% endif %}
+	              {% endfor %}
+	        	   </ul>
+	    		</div>
+	   		</div>
+	   	</div>
+
+	   	<div class="row">
+			<div class="row" style="position: relative;">
+				<div class="span6 teacher-data">
+					Graphs
+				</div>
+		    {% if teacher %}
+				<div id="chart_teacher" style="width: 500px; height: 400px; position: absolute; left: 490px; top: 50px; border-radius: 5px;" class="nice"></div>
+		    {% endif %}
+			</div>
+	   	</div>
+	   	{% endif %}
+
+	</div>
+</div>
+
+ <div class="container" style="margin-top: 50px;">
+    	<div class="row">
+        	<div class="span6 header">
+           	 
+            	<h4>In the News</h4>
+           	 
+            	<div class="row news">
+                	<div class="span5">
+                    	<h5><a href="http://studentsfirstny.org/index.cfm?objectid=05219010-7779-11E2-90B7000C296BA163">There is a Clear Path to Better Teacher Evaluations for NYC</a></h5>
+                	</div>
+            	</div>
+           	 
+            	<div class="row news">
+                	<div class="span1">
+                    	<img src="http://studentsfirstny.org/images/dmImage/ThumbnailImage/tn-nydn2.jpg" class="img-polaroid"><!-- INSERT ARTICLE IMAGE -->                   	 
+                	</div>
+                	<div class="span4 news-desc">
+                	NY Daily News // February 15, 2013 Last month, after leaders from the teachers' union and City failed to reach an agreement on a new teacher evaluation system,
+                	Governor Cuomo proposed a new plan to break the standstill. If the two sides cannot come to an agreement soon, Governor Cuomo said the state will step in and implement a plan for NYC.    
+                	</div>
+            	</div>
+           	 
+        	</div>
+        	<div class="span6 header action">
+            	<h4>Get Involved</h4>
+            	<p>Write to your local Congressman.</p>
+            	<p>Sign up to receive updates.</p>
+            	<form class="form-inline">
+                	<input type="text" placeholder="Enter email"> <button class="btn btn-success">Sign Up!</button>
+            	</form>
+        	</div>
+    	</div>
+</div>
+
+	<div class="row">
+    	<div class="span12">
+    		&nbsp;
+    	</div>
+	</div>
+
+</body>  
+
+ <script>
+  $(function() {
+  var availableTags = [
+  {% for school in schools %}
+  {
+  	label: "{{ school.name }}",
+  	value: "{{ school.dbn }}",
+  	dbn: "{{ school.dbn }}"
+  },
+  {% endfor %}
+  ];
+  $( "#schools" ).autocomplete({
+  source: availableTags
+  });
+  });
+</script>
+
+</html>   

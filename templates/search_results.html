@@ -1,0 +1,13 @@
+<html>
+<head>
+    <title>You searched for: <strong> {{ query }} </strong></title>
+</head>
+<body>
+	<p>Found teachers:</p>
+	<ul>
+		{% for school in schools %}
+		<li>{{ school.name }}</li>
+		{% endfor %}
+	</ul>
+</body>
+</html>

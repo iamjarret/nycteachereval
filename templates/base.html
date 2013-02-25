@@ -1,0 +1,58 @@
+<!DOCTYPE html>   
+<html lang="en">   
+<head>   
+<meta charset="utf-8">   
+<title>Teacher Ratings</title>   
+<meta name="description" content="Twitter Bootstrap Basic Tab Based Navigation Example">  
+<link href="http://bootswatch.com/readable/bootstrap.min.css" rel="stylesheet">   
+<link href="../static/css/base.css" rel="stylesheet">  
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+
+{% block javascript %}
+{% endblock %}
+
+<body>
+	<div class="container" style="height: 1300px;">
+		<div class="row">
+	    	<div class="header">
+	        	<img src="../static/img/logo.png">
+	    	</div>
+		</div>
+
+		<div class="row">   	
+			<div class="span10 offset1 explanation">
+        {% block toptext %}
+			  Measuring teacher quality is complicated. It is not only important to consider student
+	    	performance, but also the context in which teachers are operating. The site below provides
+	    	New York City teacher rankings along with additional context to better understand the rankings
+	    	in the context of the environment.
+        {% endblock %}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="enter-school">
+				<form method="get" action="/search/">
+	        		<input id="schools" type="text" name="school" value="Enter a School Name" class="span3" onfocus="if(this.value == 'Enter a School Name') { this.value = ''; }" style="width:300px;"><br>
+	        		<input class="btn" type="submit" value="Choose School"></input>
+	        	</form>
+	        </div>
+		</div>
+
+  {% block lowercontent %}
+
+  {% if error %}
+  <p>No schools found for query: {{query}}</p>
+  {% endif %}
+  
+  {% endblock %}
+  </div>
+
+</body>  
+
+</html>   
