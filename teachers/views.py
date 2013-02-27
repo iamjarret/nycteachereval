@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, render_to_response
 import os, traceback, sys
 from teachers.models import Teachers, School
-import requests, json
+import json
 from other import clean_demo, clean_matched
 from django.conf import settings
 from django.template import Library
@@ -42,28 +42,6 @@ def search(request):
 	else:
 		return render_to_response('base.html',{'error': error})
 
-def analyze(request, teacher_id):
-	teacher = Teacher.objects.filter(id=teacher_id)
-
-
-	teacher = Teacher.objects.filter(id=teacher_id)
-	str_request = ('http://api.donorschoose.org/common/json-teacher.html?teacher=%s&APIKey=DONORSCHOOSE' % teacher_id)
-	r = requests.get(str_request)
-	data_dict = {}
-	if r.status_code == 200:
-		json_response = json.loads(str(r.text))
-		if not teacher:
-			teacher = Teacher(id=teacher_id)
-		teacher.description = json_response['description']
-		teacher.photo_url = json_response['photoURL']
-		teacher.poverty = json_response['povertyLevel']
-		teacher.profile_url = json_response['profileURL']
-		teacher.save()
-
-	return render(
-    	request,
-    	'analyze.html',
-    	{'teacher': teacher})
 
 def teacher(request, dbn, teacher_id):
 	teacher = Teachers.objects.get(id=teacher_id)
@@ -81,7 +59,7 @@ def school(request, dbn):
 	if not teachers:
 		error = True
 
-	return render_to_response('base_choose_teacher.html', {'school': school, 'teachers':teachers, 'error': error})
+	return render_to_response('base_school.html', {'school': school, 'teachers':teachers, 'error': error})
 
 def load(request):
 	clean_matched.main()

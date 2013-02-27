@@ -1,0 +1,80 @@
+{% extends 'base.html'%}
+
+{% block lowercontent %}
+
+<div class="row" style="margin-left: 50px; position: relative; width: 100%;">
+	<div class="span6" style="width: 400px; text-align: center;">
+    	<h1>{{ school.name }}</h1>
+	<div class="block">
+	<p>District:{{ school.district }}</p>
+	<p>Principal:{{ school.principal }}</p>
+	<p>Address:{{ school.address }}</p>
+	<p>Contact:{{ school.phone }}</p>
+	</div>
+	
+	<div class="block">
+	<h2>Neighborhood</h2>
+	<p>Name: {{ neighborhood.name }}</p>
+	<p>Crime Rate: {{ neighborhood.crime }}</p>
+	<p>Median Income: {{ neighborhood.income}}</p>
+	</div>
+	
+	<div class="block">
+	<h2>School Profile</h2>
+	<p>Placeholder for Demographic Information Pie Chart</p>
+	<p># of Students:{{ school.demographics }}</p>
+	<p>% asian: {{school.asian}} </p>
+	<p>% black: {{school.black}} </p>
+	<p>% hispanic: {{school.hisp}} </p>
+	<p>% white: {{school.white}} </p>
+	<p>% male: {{school.male}} </p>
+	<p>% female: {{school.female}} </p>
+	<p>Ell: {{ school.ell }}</p>
+	<p>Placeholder for description.</p>
+	</div>
+
+	<div class="block">
+	<h2>Report Card</h2>
+	<p>{{ school.grade }}</p>
+	<p>Placeholder for description.</p>
+	</div>
+	
+	<div class="block">
+	<h2>Graduation Rate</h2>
+	<p>{{ school.gradrate }}</p>
+	<p>Placeholder for description.</p>
+	</div>
+
+	<div class="block">
+	<h2>Income Profile</h2>
+	<p>% Free Lunch: {{ school.freelunch }}</p>
+	<p>Placeholder for description.</p>
+	</div>
+
+	<div class="block">
+	<h2>Class Size</h2>
+	<p>{{ school.classsize }}</p>
+	<p>Placeholder for description.</p>
+	</div>
+
+	</div>
+</div>
+
+<div class="row">
+	<div class="span6">
+		<div class="teacher-wrap">
+		{% if error %}
+		<p class="choose-a-teacher"> No teacher evaluations available for this school </p>
+		{% else %}
+	  	<p class="choose-a-teacher"> Choose a teacher </p>
+	   	{% endif %}
+	   	<ul class="teacher-list">
+	      {% for teacher in teachers %}
+	      <li><a href="/home/{{ school.dbn }}/{{ teacher.id }}">{{ teacher.last_name }}, {{ teacher.first_name }}</a> </li>
+	      {% endfor %}
+		   </ul>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
