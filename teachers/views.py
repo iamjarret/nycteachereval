@@ -1,12 +1,13 @@
 from django.http import HttpResponse
 from django.shortcuts import render, render_to_response
 import os, traceback, sys
-from teachers.models import Teachers, School
+from teachers.models import *
 import json
-from other import clean_demo, clean_matched
+from load import loadTeacher
 from django.conf import settings
 from django.template import Library
 from django import template
+import os
 
 register = Library()
 register.filter('media')
@@ -62,22 +63,16 @@ def school(request, dbn):
 	return render_to_response('base_school.html', {'school': school, 'teachers':teachers, 'error': error})
 
 def load(request):
-	clean_matched.main()
-	clean_demo.main()
+	loadTeacher(os.getcwd()+'/teachers/teachers_matched.csv')
 	loadhtml = "<html><body>LOAD SUCCESFUL!</body></html>"
 	return HttpResponse(loadhtml)
 
 def drop(request):
 	Teachers.objects.all().delete()
-	School.objects.filter(dbn__icontains = "1").delete()
-	School.objects.filter(dbn__icontains = "2").delete()
-	School.objects.filter(dbn__icontains = "3").delete()
-	School.objects.filter(dbn__icontains = "4").delete()
-	School.objects.filter(dbn__icontains = "5").delete()
-	School.objects.filter(dbn__icontains = "6").delete()
-	School.objects.filter(dbn__icontains = "7").delete()
-	School.objects.filter(dbn__icontains = "8").delete()
-	School.objects.filter(dbn__icontains = "9").delete()
+	School.objects.all().delete()
+	City.objects.all().delete()
+	Borough.objects.all().delete()
+	District.objects.all().delete()
 	
 	loadhtml = "<html><body>DROP SUCCESSFUL!</body></html>"
 	return HttpResponse(loadhtml)
